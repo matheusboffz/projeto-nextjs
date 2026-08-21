@@ -4,16 +4,18 @@ import { useState } from "react";
 
 export default function Home() {
   const [celsius, setCelsius] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
 
-  const fahrenheit =
-    celsius === ""
-      ? ""
-      : ((Number(celsius) * 9) / 5 + 32).toFixed(1);
+  function convert() {
+    if (!celsius) return;
 
-  const kelvin =
-    celsius === ""
-      ? ""
-      : (Number(celsius) + 273.15).toFixed(1);
+    const fahrenheit = ((Number(celsius) * 9) / 5 + 32).toFixed(1);
+
+    setHistory((prev) => [
+      `${celsius}°C = ${fahrenheit}°F`,
+      ...prev,
+    ]);
+  }
 
   return (
     <main style={{ padding: "40px" }}>
@@ -21,13 +23,21 @@ export default function Home() {
 
       <input
         type="number"
-        placeholder="Digite Celsius"
         value={celsius}
         onChange={(e) => setCelsius(e.target.value)}
       />
 
-      <h2>Fahrenheit: {fahrenheit} °F</h2>
-      <h2>Kelvin: {kelvin} K</h2>
+      <button onClick={convert}>
+        Converter
+      </button>
+
+      <h2>Histórico</h2>
+
+      <ul>
+        {history.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </main>
   );
 }
