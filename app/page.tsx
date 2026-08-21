@@ -10,6 +10,11 @@ export default function Home() {
       ? ""
       : ((Number(celsius) * 9) / 5 + 32).toFixed(1);
 
+  const kelvin =
+    celsius === ""
+      ? ""
+      : (Number(celsius) + 273.15).toFixed(1);
+
   return (
     <main style={{ padding: "40px" }}>
       <h1>Conversor de Temperatura</h1>
@@ -21,7 +26,8 @@ export default function Home() {
         onChange={(e) => setCelsius(e.target.value)}
       />
 
-      <h2>{fahrenheit} °F</h2>
+      <h2>Fahrenheit: {fahrenheit} °F</h2>
+      <h2>Kelvin: {kelvin} K</h2>
     </main>
   );
 }
